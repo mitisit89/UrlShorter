@@ -1,5 +1,7 @@
 import datetime
-from sqlalchemy import Column, Integer, String, create_engine,DateTime
+
+from pydantic import BaseModel
+from sqlalchemy import Column, DateTime, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -14,10 +16,17 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
-class Urls(Base):
+class UrlsModel(Base):
     __tablename__ = "urls"
 
-    id = Column(Integer,primary_key=True,index=True)
-    origin_url=Column(String)
-    shorted_url=Column(String,index=True)
-    created=Column(DateTime,datetime.datetime.utcnow())
+    id = Column(Integer, primary_key=True, index=True)
+    origin_url = Column(String)
+    key_url = Column(String,unique=True, index=True)
+    created = Column(DateTime, datetime.datetime.utcnow())
+
+
+class UrlsBase(BaseModel):
+    origin_url: str
+
+    class Config:
+        orm_mode = True
