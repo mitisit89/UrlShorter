@@ -21,8 +21,8 @@ class UrlsModel(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     origin_url = Column(String)
-    key_url = Column(String,unique=True, index=True)
-    created = Column(DateTime, datetime.datetime.utcnow())
+    key_url = Column(String, unique=True, index=True)
+    created = Column(DateTime, default=datetime.datetime.utcnow)
 
 
 class UrlsBase(BaseModel):
@@ -30,3 +30,7 @@ class UrlsBase(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class KeyUrlBase(BaseModel):
+    key_url: str

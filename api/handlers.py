@@ -12,13 +12,15 @@ def key_url_gen() -> str:
     return "".join(choice(ascii_letters + digits) for _ in range(8))
 
 
-def get_origin_url(db: Session, shorted_url: str):
-    return db.query(UrlsModel)
+def get_origin_url(db: Session, key_url: str):
+
+    return db.query(UrlsModel).filter(UrlsModel.key_url == key_url).first().origin_url
 
 
-def save_urls(db: Session, url: UrlsBase) -> None:
+def save_urls(db: Session, url: UrlsBase):
     key_url = key_url_gen()
     db_urls = UrlsModel(origin_url=url.origin_url, key_url=key_url)
     db.add(db_urls)
-    db.commit
-    return None
+    db.commit()
+    db.refresh(db_urls)
+    return dict(key_url=key_url)
