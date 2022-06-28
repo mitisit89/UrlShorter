@@ -1,4 +1,5 @@
 from api import api
+import uvicorn
 
 
 def main():
@@ -6,4 +7,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run("main:api")
