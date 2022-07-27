@@ -12,7 +12,8 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 DataBase = declarative_base()
 
-DataBase.metadata.create_all(bind=engine)
+create_db = lambda: DataBase.metadata.create_all(bind=engine)
+
 
 def get_db() -> Iterator:
     db = SessionLocal()

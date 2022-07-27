@@ -1,13 +1,12 @@
-
 from fastapi import Depends, FastAPI
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
 from api.handlers import get_origin_url, save_urls
 from api.validators import KeyUrlBase, UrlsBase
-from api.settings import get_db
+from api.settings import get_db,create_db
 
-api = FastAPI()
+api = FastAPI(on_startup=create_db())
 
 
 @api.get("/{key_url}")
