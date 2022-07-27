@@ -1,12 +1,9 @@
-from api import api
 import uvicorn
-
+from api.api import api
 
 
 def main():
     return api
-
-
 
 
 if __name__ == "__main__":
